@@ -5,6 +5,12 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Czf.Database.Radiocom", "Czf.Database.Radiocom\Czf.Database.Radiocom.sqlproj", "{37EB4F95-17C1-4633-93E0-E1C13C5B5E6D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Czf.App.RadiocomDataCollector", "Czf.App.RadiocomDataCollector\Czf.App.RadiocomDataCollector.csproj", "{B94F9B9A-075F-4009-80A9-6B9495A786D5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Czf.Engine.RadiocomDataCollector", "Czf.Engine.RadiocomDataCollector\Czf.Engine.RadiocomDataCollector.csproj", "{A08A1FC6-77DE-4C85-A6B0-7E93629F6EA8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Czf.Engine.RadiocomDataCollector.Test", "Czf.Engine.RadiocomDataCollector.Test\Czf.Engine.RadiocomDataCollector.Test.csproj", "{DE2CEAA3-697F-421D-B01B-52A7C8AFE089}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +23,18 @@ Global
 		{37EB4F95-17C1-4633-93E0-E1C13C5B5E6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37EB4F95-17C1-4633-93E0-E1C13C5B5E6D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{37EB4F95-17C1-4633-93E0-E1C13C5B5E6D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B94F9B9A-075F-4009-80A9-6B9495A786D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B94F9B9A-075F-4009-80A9-6B9495A786D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B94F9B9A-075F-4009-80A9-6B9495A786D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B94F9B9A-075F-4009-80A9-6B9495A786D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A08A1FC6-77DE-4C85-A6B0-7E93629F6EA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A08A1FC6-77DE-4C85-A6B0-7E93629F6EA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A08A1FC6-77DE-4C85-A6B0-7E93629F6EA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A08A1FC6-77DE-4C85-A6B0-7E93629F6EA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE2CEAA3-697F-421D-B01B-52A7C8AFE089}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE2CEAA3-697F-421D-B01B-52A7C8AFE089}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE2CEAA3-697F-421D-B01B-52A7C8AFE089}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE2CEAA3-697F-421D-B01B-52A7C8AFE089}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
