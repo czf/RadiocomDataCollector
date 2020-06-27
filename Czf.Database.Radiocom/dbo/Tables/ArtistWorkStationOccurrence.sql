@@ -7,3 +7,11 @@
     CONSTRAINT [FK_ArtistWorkStationOccurrence_Station] FOREIGN KEY ([StationId]) REFERENCES [dbo].[Station] ([Id]) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
+
+
+GO
+GRANT SELECT
+    ON OBJECT::[dbo].[ArtistWorkStationOccurrence] TO [RadioComCollectorDbAccount]
+    AS [dbo];
+

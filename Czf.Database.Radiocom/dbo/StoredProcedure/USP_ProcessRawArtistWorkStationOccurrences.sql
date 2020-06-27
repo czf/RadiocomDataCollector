@@ -58,3 +58,8 @@ BEGIN CATCH;
 	THROW;
 
 END CATCH
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[USP_ProcessRawArtistWorkStationOccurrences] TO [RadioComCollectorDbAccount]
+    AS [dbo];
+

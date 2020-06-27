@@ -21,7 +21,7 @@ namespace Czf.Repository.Radiocom
         public async Task<int> ProcessRawOccurrances(IEnumerable<RawArtistWorkStationOccurrence> occurrences)
         {
             int inserted = -1;
-            using (IDbConnection conn = _dbConnectionFactory.GetConnection(_sqlRadiocomRepositoryOptions.ConnectionString))
+            using (IDbConnection conn = await _dbConnectionFactory.GetConnection(_sqlRadiocomRepositoryOptions.ConnectionString))
             {
                 RawArtistWorkStationOccurrenceDataRecords records = new RawArtistWorkStationOccurrenceDataRecords(occurrences);
 

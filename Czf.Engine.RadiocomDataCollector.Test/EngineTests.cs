@@ -99,11 +99,13 @@ namespace Czf.Engine.RadiocomDataCollector.Test
             Assert.AreEqual(now.AddHours(-3).Hour, (int)clientCalls[3].GetArguments()[1]);
             Assert.AreEqual(now.AddHours(-4).Hour, (int)clientCalls[4].GetArguments()[1]);
 
+            now = ConvertTime(now);
+
             Assert.AreEqual(now.DayOfWeek.ToString() , clientCalls[0].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString() , clientCalls[1].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString() , clientCalls[2].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString() , clientCalls[3].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString() , clientCalls[4].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString() , clientCalls[1].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString() , clientCalls[2].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString() , clientCalls[3].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString() , clientCalls[4].GetArguments()[2].ToString());
             
             #endregion assert
         }
@@ -159,11 +161,14 @@ namespace Czf.Engine.RadiocomDataCollector.Test
             Assert.AreEqual(now.AddHours(-3).Hour, (int)clientCalls[3].GetArguments()[1]);
             Assert.AreEqual(now.AddHours(-4).Hour, (int)clientCalls[4].GetArguments()[1]);
 
-            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[0].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString(), clientCalls[1].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString(), clientCalls[2].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString(), clientCalls[3].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString(), clientCalls[4].GetArguments()[2].ToString());
+            now = ConvertTime(now);
+            Assert.AreEqual(now.DayOfWeek.ToRadiocomDayOfWeek().ToString(), clientCalls[0].GetArguments()[2].ToString());
+            
+            
+            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[1].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[2].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[3].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[4].GetArguments()[2].ToString());
 
             #endregion assert
         }
@@ -223,10 +228,10 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 
             Assert.AreEqual(now.Hour, (int)clientCalls[0].GetArguments()[1]);
             Assert.AreEqual(now.AddHours(-1).Hour, (int)clientCalls[1].GetArguments()[1]);
-          
 
+            now = ConvertTime(now);
             Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[0].GetArguments()[2].ToString());
-            Assert.AreEqual(now.AddDays(-1).DayOfWeek.ToString(), clientCalls[1].GetArguments()[2].ToString());
+            Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[1].GetArguments()[2].ToString());
            
 
             #endregion assert
@@ -279,7 +284,8 @@ namespace Czf.Engine.RadiocomDataCollector.Test
             Assert.AreEqual(902, (int)clientCalls[0].GetArguments()[0]);
             
             Assert.AreEqual(now.Hour, (int)clientCalls[0].GetArguments()[1]);
-            
+
+            now = ConvertTime(now);
             Assert.AreEqual(now.DayOfWeek.ToString(), clientCalls[0].GetArguments()[2].ToString());
             
             #endregion assert
@@ -300,6 +306,8 @@ namespace Czf.Engine.RadiocomDataCollector.Test
                     Id = 404
                 }
             };
+
+        private DateTimeOffset ConvertTime(DateTimeOffset dateTime) =>  TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.FindSystemTimeZoneById("Pacific Standard Time"));
     }
 }
 

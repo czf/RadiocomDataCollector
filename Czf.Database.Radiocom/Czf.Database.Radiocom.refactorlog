@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="b63a2169-e8d2-46d4-9f34-831c8ec23f98" ChangeDateTime="05/30/2020 00:17:55">
+    <Property Name="ElementName" Value="[dbo].[Station].[category]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Station]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Category" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="a807faa8-cd9c-44c4-9e8a-00f39db4b0a8" ChangeDateTime="05/30/2020 00:17:59">
+    <Property Name="ElementName" Value="[dbo].[Station].[gmt_offset]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Station]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Gmt_offset" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8b00cd0e-13bb-4fc9-82f3-2813600ce7f6" ChangeDateTime="05/30/2020 00:18:14">
+    <Property Name="ElementName" Value="[dbo].[Station].[Gmt_offset]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Station]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="GmtOffset" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="7cf145cc-7b81-46f5-9699-20cbe2672bb6" ChangeDateTime="05/30/2020 00:46:06">
+    <Property Name="ElementName" Value="[dbo].[FK_ArtistWork_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[ArtistWork]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_ArtistWork_ToTablhe]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ce7b32cb-1094-4c45-adcc-be5d3eeddc54" ChangeDateTime="05/30/2020 00:50:44">
+    <Property Name="ElementName" Value="[dbo].[FK_ArtistWork_ToTable]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[ArtistWork]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_ArtistWork_]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dc9e0ac5-7eba-423f-ba9c-4202068ec1bd" ChangeDateTime="06/01/2020 04:32:51">
+    <Property Name="ElementName" Value="[dbo].[ArtistWorkStationOccurrenceTableType]" />
+    <Property Name="ElementType" Value="SqlTableType" />
+    <Property Name="ParentElementName" Value="[dbo]" />
+    <Property Name="ParentElementType" Value="SqlSchema" />
+    <Property Name="NewName" Value="[RawArtistWorkStationOccurrenceTableType]" />
+  </Operation>
+</Operations>

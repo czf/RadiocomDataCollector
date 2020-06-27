@@ -48,9 +48,10 @@ namespace Czf.Engine.RadiocomDataCollector
                 DateTimeOffset date = now.AddHours(runs * -1);
                 int hour = date.Hour;
                 StationRecentlyPlayedResponse response = await GetResponse(date, hour);
+                response.Schedule.RemoveAll(x => x.Playing);
                 IEnumerable<RawArtistWorkStationOccurrence> rawOccurrences = response.ToRawOccurrences();
 
-                rawOccurrences = rawOccurrences.Where(x => !timestamps.Contains(x.StartTime)).AsList();
+                rawOccurrences = rawOccurrences.Where(x =>  !timestamps.Contains(x.StartTime)).AsList();
                 timestamps.UnionWith(rawOccurrences.Select(x => x.StartTime));
                 int occurrances = rawOccurrences.Count();
 

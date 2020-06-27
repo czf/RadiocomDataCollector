@@ -1,0 +1,2 @@
+﻿CREATE USER [RadioComCollectorDbAccount] FOR EXTERNAL PROVIDER;
+

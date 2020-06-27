@@ -1,10 +1,12 @@
-﻿CREATE TABLE [dbo].[Station]
-(
-	[Id] BIGINT NOT NULL PRIMARY KEY, 
-    [Category] NVARCHAR(50) NOT NULL, 
-    [GmtOffset] SMALLINT NOT NULL, 
-    [PlayingClass] NVARCHAR(50) NOT NULL 
-)
+﻿CREATE TABLE [dbo].[Station] (
+    [Id]           BIGINT        NOT NULL,
+    [Category]     NVARCHAR (50) NOT NULL,
+    [GmtOffset]    SMALLINT      NOT NULL,
+    [PlayingClass] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+
 
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
@@ -15,3 +17,8 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'Station',
     @level2type = N'COLUMN',
     @level2name = N'Id'
+GO
+GRANT SELECT
+    ON OBJECT::[dbo].[Station] TO [RadioComCollectorDbAccount]
+    AS [dbo];
+

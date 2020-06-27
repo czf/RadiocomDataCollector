@@ -1,11 +1,11 @@
 ﻿using System.Data;
-
+using System.Threading.Tasks;
 
 namespace Czf.Repository.Radiocom
 {
     public interface IDbConnectionFactory
     {
-        IDbConnection GetConnection(string connectionString);
+        Task<IDbConnection> GetConnection(string connectionString);
     }
 }
 

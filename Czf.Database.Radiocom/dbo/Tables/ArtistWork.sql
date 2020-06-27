@@ -8,6 +8,8 @@
 
 
 
+
+
 GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
     @value = N'In most cases a song',
@@ -17,3 +19,8 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1name = N'ArtistWork',
     @level2type = NULL,
     @level2name = NULL
+GO
+GRANT SELECT
+    ON OBJECT::[dbo].[ArtistWork] TO [RadioComCollectorDbAccount]
+    AS [dbo];
+
