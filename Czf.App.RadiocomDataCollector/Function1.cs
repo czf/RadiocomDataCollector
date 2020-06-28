@@ -21,6 +21,7 @@ namespace Czf.App.RadiocomDataCollector
             _radiocomDataCollectorEngine = radiocomDataCollectorEngine;
         }
 
+        [Disable("TEST_RUNNER")]
         [FunctionName("test")]
         public async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req,

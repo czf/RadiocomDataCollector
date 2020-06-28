@@ -26,7 +26,7 @@ namespace Czf.Engine.RadiocomDataCollector
         private IDateTimeOffsetProvider _dateTimeOffsetProvider;
         private ILogger _log;
         #endregion private
-        public RadiocomDataCollectorEngine(IRadiocomClient client, IRadiocomRepository radiocomRepository, IOptions<RadiocomDataCollectorEngineOptions> radiocomDataCollectorEngineOptions, IDateTimeOffsetProvider dateTimeOffsetProvider, ILogger log)
+        public RadiocomDataCollectorEngine(IRadiocomClient client, IRadiocomRepository radiocomRepository, IOptions<RadiocomDataCollectorEngineOptions> radiocomDataCollectorEngineOptions, IDateTimeOffsetProvider dateTimeOffsetProvider, ILogger<RadiocomDataCollectorEngine> log)
         {
             _client = client;
             _radiocomRepository = radiocomRepository;
@@ -44,7 +44,6 @@ namespace Czf.Engine.RadiocomDataCollector
             bool continueRunning;
             do
             {
-
                 DateTimeOffset date = now.AddHours(runs * -1);
                 int hour = date.Hour;
                 StationRecentlyPlayedResponse response = await GetResponse(date, hour);
@@ -60,7 +59,10 @@ namespace Czf.Engine.RadiocomDataCollector
                 if (continueRunning && occurrances > 0)
                 {
                     Thread.Sleep(100);//throttle requests
-                    continueRunning = await _radiocomRepository.ProcessRawOccurrances(rawOccurrences) == occurrances;
+                    _log.LogInformation($"Will process {rawOccurrences} raw occurrences.");
+                    int totalNeededProcessing = await _radiocomRepository.ProcessRawOccurrances(rawOccurrences);
+                    continueRunning =  totalNeededProcessing == occurrances;
+                    _log.LogInformation($"Total occurrences needed processing: {totalNeededProcessing}.");
                 }
             } while (continueRunning);
         }

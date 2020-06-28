@@ -339,3 +339,4 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 /Czf.Database.Radiocom/SqlSchemaCompare.scmp
+/Czf.App.RadiocomDataCollector/Properties/serviceDependencies.czf-radiocom-datacollector - Zip Deploy.json

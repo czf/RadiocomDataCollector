@@ -10,7 +10,7 @@ BEGIN TRY;
 	SET @NewOccurrenceInsertedCount = 0;
 	INSERT INTO dbo.Artist
 	([Name])
-	SELECT 
+	SELECT DISTINCT	
 	iop.Artist
 	FROM @IncomingOccurrences iop
 	WHERE NOT EXISTS (
@@ -22,7 +22,7 @@ BEGIN TRY;
 		ArtistId,
 		Title
 	)
-	SELECT
+	SELECT DISTINCT
 		a.Id,
 		iop.Title
 	FROM @IncomingOccurrences iop
@@ -48,7 +48,7 @@ BEGIN TRY;
 	INNER JOIN	dbo.ArtistWork aw ON aw.ArtistId = a.Id AND aw.Title = iop.Title
 	WHERE NOT EXISTS(
 		SELECT 1 FROM dbo.ArtistWorkStationOccurrence awso2 
-		WHERE awso2.StartTime = iop.StartTime AND awso2.StationId = awso2.StationId);
+		WHERE awso2.StartTime = iop.StartTime AND awso2.StationId = iop.StationId);
 
 	SET @NewOccurrenceInsertedCount = @@ROWCOUNT;
 	COMMIT TRANSACTION;
