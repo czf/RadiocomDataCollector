@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Czf.ApiWrapper.Radiocom;
+using Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom;
 using Czf.Repository.Radiocom;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -25,14 +26,22 @@ namespace Czf.Engine.RadiocomDataCollector
         private readonly RadiocomDataCollectorEngineOptions _radiocomDataCollectorEngineOptions;
         private IDateTimeOffsetProvider _dateTimeOffsetProvider;
         private ILogger _log;
+        private readonly IPublishCollectorEventCompleted _publishCollectorEventCompleted;
         #endregion private
-        public RadiocomDataCollectorEngine(IRadiocomClient client, IRadiocomRepository radiocomRepository, IOptions<RadiocomDataCollectorEngineOptions> radiocomDataCollectorEngineOptions, IDateTimeOffsetProvider dateTimeOffsetProvider, ILogger<RadiocomDataCollectorEngine> log)
+        public RadiocomDataCollectorEngine(
+            IRadiocomClient client, 
+            IRadiocomRepository radiocomRepository, 
+            IOptions<RadiocomDataCollectorEngineOptions> radiocomDataCollectorEngineOptions, 
+            IDateTimeOffsetProvider dateTimeOffsetProvider, 
+            ILogger<RadiocomDataCollectorEngine> log,
+            IPublishCollectorEventCompleted publishCollectorEventCompleted)
         {
             _client = client;
             _radiocomRepository = radiocomRepository;
             _radiocomDataCollectorEngineOptions = radiocomDataCollectorEngineOptions.Value;
             _dateTimeOffsetProvider = dateTimeOffsetProvider;
             _log = log;
+            _publishCollectorEventCompleted = publishCollectorEventCompleted;
         }
 
 
@@ -52,19 +61,21 @@ namespace Czf.Engine.RadiocomDataCollector
 
                 rawOccurrences = rawOccurrences.Where(x =>  !timestamps.Contains(x.StartTime)).AsList();
                 timestamps.UnionWith(rawOccurrences.Select(x => x.StartTime));
-                int occurrances = rawOccurrences.Count();
+                int occurrences = rawOccurrences.Count();
 
                 runs++;
                 continueRunning = runs <= _radiocomDataCollectorEngineOptions.HoursBackToRetrive;
-                if (continueRunning && occurrances > 0)
+                if (continueRunning && occurrences > 0)
                 {
                     Thread.Sleep(100);//throttle requests
-                    _log.LogInformation($"Will process {rawOccurrences} raw occurrences.");
+                    _log.LogInformation($"Will process {occurrences} raw occurrences.");
                     int totalNeededProcessing = await _radiocomRepository.ProcessRawOccurrances(rawOccurrences);
-                    continueRunning =  totalNeededProcessing == occurrances;
+                    continueRunning =  totalNeededProcessing == occurrences;
                     _log.LogInformation($"Total occurrences needed processing: {totalNeededProcessing}.");
                 }
             } while (continueRunning);
+            await _publishCollectorEventCompleted.NotifyCollectorEventCompleted();
+
         }
 
         private async Task<StationRecentlyPlayedResponse> GetResponse(DateTimeOffset date, int hour)

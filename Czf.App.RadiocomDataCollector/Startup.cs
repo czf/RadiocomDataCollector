@@ -1,6 +1,7 @@
 ﻿using System;
 using Czf.ApiWrapper.Radiocom;
 using Czf.Engine.RadiocomDataCollector;
+using Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom;
 using Czf.Repository.Radiocom;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -8,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using static Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom.AzureStorageQueuePublishCollectorEventCompleted;
 using static Czf.Repository.Radiocom.SqlConnectionFactory;
 using static Czf.Repository.Radiocom.SqlRadiocomRepository;
 
@@ -18,7 +20,6 @@ namespace Czf.App.RadiocomDataCollector
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            
             builder.Services.AddHttpClient()
                 .AddLogging()
                 .AddSingleton<RadiocomDataCollectorEngine>()
@@ -26,7 +27,20 @@ namespace Czf.App.RadiocomDataCollector
                 .AddSingleton<IRadiocomRepository, SqlRadiocomRepository>()
                 .AddSingleton<IDateTimeOffsetProvider, SystemDateTimeOffsetProvider>()
                 .AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
-            
+            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("IsLocalEnvironmet")))
+            {
+                builder.Services
+                    .AddSingleton<IPublishCollectorEventCompleted, LocalStorageQueuePublishCollectorEventCompleted>();
+            }
+            else {
+                builder.Services
+                    .AddSingleton<IPublishCollectorEventCompleted, AzureStorageQueuePublishCollectorEventCompleted>();
+
+                builder.Services
+                .AddOptions()
+                .AddOptions<AzureStorageQueuePublishCollectorEventCompletedOptions>()
+                .Configure<IConfiguration>((settings, configuration) => configuration.GetSection(AzureStorageQueuePublishCollectorEventCompletedOptions.AzureStorageQueuePublishCollectorEventCompleted).Bind(settings));
+            }
             builder.Services
                 .AddOptions()
                 .AddOptions<RadiocomDataCollectorEngineOptions>()
@@ -44,6 +58,7 @@ namespace Czf.App.RadiocomDataCollector
                 .AddOptions<SqlRadiocomRepositoryOptions>()
                 .Configure<IConfiguration>((settings, configuration) => configuration.GetSection("SqlRadiocomRepositoryOptions").Bind(settings));
 
+            
 
             
         }
