@@ -10,7 +10,7 @@ namespace Czf.App.RadiocomDataCollector
     {
         private readonly RadiocomDataCollectorEngine _radiocomDataCollectorEngine;
 
-        public RadiocomEngineRunner( RadiocomDataCollectorEngine radiocomDataCollectorEngine)
+        public RadiocomEngineRunner(RadiocomDataCollectorEngine radiocomDataCollectorEngine)
         {
             _radiocomDataCollectorEngine = radiocomDataCollectorEngine;
         }

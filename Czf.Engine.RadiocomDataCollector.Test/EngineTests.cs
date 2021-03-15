@@ -18,11 +18,11 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 {
     public class EngineTests
     {
-        private ILogger log;
+        private ILogger<RadiocomDataCollectorEngine> log;
         [OneTimeSetUp]
         public void OneTimeSetup()
         {
-            log = Substitute.For<ILogger>();
+            log = Substitute.For<ILogger<RadiocomDataCollectorEngine>>();
         }
 
 

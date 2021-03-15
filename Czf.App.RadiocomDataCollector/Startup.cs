@@ -27,7 +27,7 @@ namespace Czf.App.RadiocomDataCollector
                 .AddSingleton<IRadiocomRepository, SqlRadiocomRepository>()
                 .AddSingleton<IDateTimeOffsetProvider, SystemDateTimeOffsetProvider>()
                 .AddSingleton<IDbConnectionFactory, SqlConnectionFactory>();
-            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("IsLocalEnvironmet")))
+            if (Convert.ToBoolean(Environment.GetEnvironmentVariable("IsLocalEnvironment")))
             {
                 builder.Services
                     .AddSingleton<IPublishCollectorEventCompleted, LocalStorageQueuePublishCollectorEventCompleted>();

@@ -38,7 +38,7 @@ namespace Czf.Repository.Radiocom.Test
             dbConnection.When(x => x.CloseAsync()).Do(x => dbConnection.State.Returns(ConnectionState.Closed));
             dbCommand.Parameters.Returns(dataParameters);
             dbCommand.ExecuteNonQueryAsync().Returns(1);
-            
+
             DbParameter dbDataParameter1 = Substitute.For<DbParameter>();
             DbParameter dbDataParameter2 = Substitute.For<DbParameter>();
             dbCommand.When(x => x.ExecuteNonQueryAsync()).Do(x => dbDataParameter2.Value = 1);
@@ -77,16 +77,16 @@ namespace Czf.Repository.Radiocom.Test
         public void RawArtistWorkStationOccurrenceDataRecordsTest()
         {
             #region arrange
-            
+
             List<RawArtistWorkStationOccurrence> list = new List<RawArtistWorkStationOccurrence>();
             list.Add(new RawArtistWorkStationOccurrence() { Artist = "artist1", StartTime = DateTimeOffset.MinValue, StationId = 1, Title = "title1" });
             list.Add(new RawArtistWorkStationOccurrence() { Artist = "artist2", StartTime = DateTimeOffset.MinValue.AddMinutes(5), StationId = 1, Title = "title2" });
-                        
+
             RawArtistWorkStationOccurrenceDataRecords records = new RawArtistWorkStationOccurrenceDataRecords(list);
             #endregion arrange
 
             #region act
-            List<SqlDataRecord>recordsList = records.AsList();
+            List<SqlDataRecord> recordsList = records.AsList();
             #endregion act
 
             #region assert
@@ -104,5 +104,92 @@ namespace Czf.Repository.Radiocom.Test
             #endregion assert
 
         }
+
+        public static int[][] update_board(int[][] board)
+        {
+            int[][] newBoard = new int[board.Length][];
+            for (int a = 0; a < board.Length; a++)
+            {
+                newBoard[a] = new int[board[a].Length];
+                for (int b = 0; b < board[a].Length; b++)
+                {
+                    int countLive = 0;
+                    if (a - 1 > 0 && b - 1 > 0 && board[a - 1][b - 1] == 1)
+                    {
+                        countLive++;
+                    }
+                    Console.WriteLine($"1: {a},{b}: {countLive}");
+
+                    if (b - 1 > 0 && board[a][b - 1] == 1)
+                    {
+                        countLive++;
+                    }
+                    Console.WriteLine($"2: {a},{b}: {countLive}");
+                    if (a + 1 < board.Length && b - 1 > 0 && board[a + 1][b - 1] == 1)
+                    {
+                        countLive++;
+                    }
+                    Console.WriteLine($"3: {a},{b}: {countLive}");
+                    if (a - 1 > 0 && b + 1 < board[a].Length && board[a - 1][b + 1] == 1)
+                    {
+                        countLive++;
+                    }
+
+                    Console.WriteLine($"4: {a},{b}: {countLive}");
+                    if (a + 1 < board.Length && b + 1 < board[a].Length && board[a + 1][b + 1] == 1)
+                    {
+                        countLive++;
+                    }//here
+                    Console.WriteLine($"5:  {a},{b}: {countLive}");
+                    if (a + 1 < board.Length && board[a + 1][b] == 1)
+                    {
+                        countLive++;
+                    }
+                    Console.WriteLine($"6:  {a},{b}: {countLive}");
+                    if (b + 1 < board[a].Length && board[a][b + 1] == 1)
+                    {
+                        countLive++;
+                    }//here
+                    Console.WriteLine($"7: {a},{b}: {countLive}");
+                    if (a - 1 > 0 && board[a - 1][b] == 1)
+                    {
+                        countLive++;
+                    }
+                    Console.WriteLine($"8:  {a},{b}: {countLive}");
+                    bool isAlive = board[a][b] == 1;
+                    if (isAlive)
+                    {
+                        if (countLive == 2 || countLive == 3)
+                        {
+                            newBoard[a][b] = 1;
+                        }
+                        else
+                        {
+                            newBoard[a][b] = 0;
+                        }
+                    }
+                    else if (countLive == 3)
+                    {
+                        newBoard[a][b] = 1;
+                    }
+                    else
+                        newBoard[a][b] = 0;
+
+                }
+            }
+
+            return newBoard;
+        }
+        [Test]
+        public void test()
+        {
+            int[][] board = new int[4][];
+            board[0] = new int[3] { 0, 1, 0 };
+            board[1] = new int[3] { 0, 0, 1 };
+            board[2] = new int[3] { 1, 1, 1 };
+            board[3] = new int[3] { 0, 0, 0 };
+            update_board(board);
+        }
     }
+    
 }
