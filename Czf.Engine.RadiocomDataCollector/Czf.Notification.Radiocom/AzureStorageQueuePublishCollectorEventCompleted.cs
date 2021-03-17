@@ -39,7 +39,7 @@ namespace Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom
         {
             try
             {
-                return _client.SendMessageAsync(COLLECTOR_EVENT_MESSAGE);
+                return _client.SendMessageAsync(Base64Encode(COLLECTOR_EVENT_MESSAGE));
             }
             catch
             {
@@ -51,6 +51,11 @@ namespace Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom
         {
             public const string AzureStorageQueuePublishCollectorEventCompleted = "AzureStorageQueuePublishCollectorEventCompletedOptions";
             public string QueueUri { get; set; }
+        }
+        private static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return System.Convert.ToBase64String(plainTextBytes);
         }
     }
 }
