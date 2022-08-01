@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Czf.ApiWrapper.Radiocom;
+using Czf.Engine.RadiocomDataCollector.Czf.Notification.Radiocom;
 using Czf.Repository.Radiocom;
 using Dapper;
 using Microsoft.Extensions.Logging;
@@ -50,6 +51,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
         public async Task Run_RawOccurrancesProcessedUntilHoursBackToRetrieve()
         {
             #region arrange
+            IPublishCollectorEventCompleted publishCollectorEventCompleted = Substitute.For<IPublishCollectorEventCompleted>();
             IDateTimeOffsetProvider dateTimeOffsetProvider = Substitute.For<IDateTimeOffsetProvider>();
             DateTimeOffset now = DateTimeOffset.MaxValue.Subtract(TimeSpan.FromSeconds(86399));
             dateTimeOffsetProvider.UtcNow.Returns(now);
@@ -76,7 +78,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
             
             repository.ProcessRawOccurrances(Arg.Any<IEnumerable<RawArtistWorkStationOccurrence>>())
                 .Returns(response.Result.Schedule.Count);
-            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log);
+            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log, publishCollectorEventCompleted);
             
             #endregion arrange
             #region act
@@ -117,6 +119,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
         public async Task Run_RawOccurrancesProcessedOnceForNonUniqueResponseScheduleUntilHoursBackToRetrieve()
         {
             #region arrange
+            IPublishCollectorEventCompleted publishCollectorEventCompleted = Substitute.For<IPublishCollectorEventCompleted>();
             IDateTimeOffsetProvider dateTimeOffsetProvider = Substitute.For<IDateTimeOffsetProvider>();
             DateTimeOffset now = DateTimeOffset.MaxValue.Subtract(TimeSpan.FromSeconds(86399));
             dateTimeOffsetProvider.UtcNow.Returns(now);
@@ -138,7 +141,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 
             repository.ProcessRawOccurrances(Arg.Any<IEnumerable<RawArtistWorkStationOccurrence>>())
                 .Returns(response.Result.Schedule.Count, 0);
-            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log);
+            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log, publishCollectorEventCompleted);
 
             #endregion arrange
             #region act
@@ -178,6 +181,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
         public async Task Run_RawOccurrancesProcessedOnceForNonUniqueResponseScheduleUntilOverlapScheduleResposne()
         {
             #region arrange
+            IPublishCollectorEventCompleted publishCollectorEventCompleted = Substitute.For<IPublishCollectorEventCompleted>();
             IDateTimeOffsetProvider dateTimeOffsetProvider = Substitute.For<IDateTimeOffsetProvider>();
             DateTimeOffset now = DateTimeOffset.MaxValue.Subtract(TimeSpan.FromSeconds(86399));
             dateTimeOffsetProvider.UtcNow.Returns(now);
@@ -204,7 +208,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 
             repository.ProcessRawOccurrances(Arg.Any<IEnumerable<RawArtistWorkStationOccurrence>>())
                 .Returns(responseTask1.Result.Schedule.Count, 0);
-            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log);
+            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log, publishCollectorEventCompleted);
 
             #endregion arrange
             #region act
@@ -245,6 +249,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 
 
             #region arrange
+            IPublishCollectorEventCompleted publishCollectorEventCompleted = Substitute.For<IPublishCollectorEventCompleted>();
             IDateTimeOffsetProvider dateTimeOffsetProvider = Substitute.For<IDateTimeOffsetProvider>();
             DateTimeOffset now = DateTimeOffset.MaxValue.Subtract(TimeSpan.FromSeconds(86399));
             dateTimeOffsetProvider.UtcNow.Returns(now);
@@ -270,7 +275,7 @@ namespace Czf.Engine.RadiocomDataCollector.Test
 
             repository.ProcessRawOccurrances(Arg.Any<IEnumerable<RawArtistWorkStationOccurrence>>())
                 .Returns(0);
-            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log);
+            RadiocomDataCollectorEngine engine = new RadiocomDataCollectorEngine(client, repository, optionsSnapshot, dateTimeOffsetProvider, log, publishCollectorEventCompleted);
 
             #endregion arrange
             #region act
